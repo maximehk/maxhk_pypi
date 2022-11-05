@@ -1,9 +1,9 @@
 from collections import namedtuple
 from typing import List
 import json
+import re
 import shutil
 import subprocess as sp
-
 
 def __check_op() -> None:
     if shutil.which("op") is None:
@@ -12,9 +12,8 @@ def __check_op() -> None:
 
 def _build_id(entry):
     section = entry.get("section", {}).get("label")
-    if section:
-        return "_".join([section, entry.get("label")])
-    return entry.get("label")
+    new_id = "_".join([section, entry.get("label")]) if section else entry.get("label")
+    return  re.sub('[^\w]', '_', new_id)
 
 
 def _get_item(item_id: str) -> dict:
