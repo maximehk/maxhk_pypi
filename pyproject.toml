@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "maxhk"
-version = "0.0.4"
+version = "0.0.5-3"
 authors = [
   { name="Max HK", email="maxhk@noreply.com" },
 ]
@@ -17,3 +17,6 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
+[project.urls]
+Homepage = "https://github.com/maximehk/maxhk_pypi"
