@@ -5,6 +5,7 @@ import re
 import shutil
 import subprocess as sp
 
+
 def __check_op() -> None:
     if shutil.which("op") is None:
         raise RuntimeError("`op` is not installed")
@@ -13,13 +14,17 @@ def __check_op() -> None:
 def _build_id(entry):
     section = entry.get("section", {}).get("label")
     new_id = "_".join([section, entry.get("label")]) if section else entry.get("label")
-    return  re.sub('[^\w]', '_', new_id)
+    return re.sub("[^\w]", "_", new_id)
 
 
 def _get_item(item_id: str) -> dict:
     __check_op()
-    raw_data = sp.getoutput(f"op item get {item_id} --format json")
-    data = json.loads(raw_data).get("fields", [])
+    raw_data = sp.getoutput(f"op item get '{item_id}' --format json")
+    try:
+        data = json.loads(raw_data).get("fields", [])
+    except json.JSONDecodeError:
+        print(raw_data)
+        raise
     return {_build_id(x): x.get("value") for x in data}
 
 
